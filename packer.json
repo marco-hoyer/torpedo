@@ -16,11 +16,11 @@
     "type": "shell",
     "inline": [
         "sudo yum update -y",
-        "sudo yum install docker -y"
+        "sudo pip install ansible"
     ]
   },
   {
-    "type": "ansible",
+    "type": "ansible-local",
     "playbook_file": "ansible/playbooks/main.yml"
   }]
 }
