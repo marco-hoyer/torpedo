@@ -1,0 +1,18 @@
+#- name: upgrade all packages
+#  yum: name=* state=latest
+#  tags: basics
+- name: be sure basic packages are installed
+  yum: name={{item}} state=present enablerepo=epel
+  with_items:
+        - postfix
+        - fail2ban
+        - python34
+        - python34-pip
+        - docker
+  tags: basics
+- name: create application group
+  group: name=app gid=1040 state=present
+  tags: basics
+- name: create application user
+  user: name=app comment="Application user" uid=1040 group=app shell=/bin/false state=present
+  tags: basics

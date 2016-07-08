@@ -1,0 +1,4 @@
+- name: install awslogs cloudwatch logs agent
+  yum: name=awslogs state=present
+  tags: cloudwatch-logs
+- service: name=awslogs enabled=no state=stopped

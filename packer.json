@@ -1,27 +1,33 @@
 {
   "variables": {
   },
-  "builders": [{
-    "type": "amazon-ebs",
-    "region": "eu-west-1",
-    "source_ami": "ami-f9dd458a",
-    "instance_type": "t2.micro",
-    "ssh_username": "ec2-user",
-    "ami_name": "packer-example {{timestamp}}",
-    "vpc_id": "vpc-bc6aebd9",
-    "subnet_id": "subnet-96ff8df3",
-    "associate_public_ip_address": true
-  }],
-  "provisioners": [{
-    "type": "shell",
-    "inline": [
-        "sudo yum update -y",
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "region": "eu-west-1",
+      "source_ami": "ami-f9dd458a",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "ami_name": "torpedo {{timestamp}}",
+      "vpc_id": "vpc-bc6aebd9",
+      "subnet_id": "subnet-96ff8df3",
+      "associate_public_ip_address": true
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
         "sudo pip install ansible"
-    ]
-  },
-  {
-    "type": "ansible-local",
-    "playbook_file": "ansible/playbooks/main.yml",
-    "role_paths": "ansible/roles/basics"
-  }]
+      ]
+    },
+    {
+      "type": "ansible-local",
+      "playbook_file": "src/main/ansible/playbooks/main.yml",
+      "role_paths": [
+        "src/main/ansible/roles/basics",
+        "src/main/ansible/roles/cloudwatch-logs"
+      ]
+    }
+  ]
 }
